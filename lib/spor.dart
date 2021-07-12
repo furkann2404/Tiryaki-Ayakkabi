@@ -1,47 +1,55 @@
 import 'package:flutter/material.dart';
-import 'package:vize/main.dart';
-import 'package:vize/satinal.dart';
+import 'file_utils.dart';
 
 class spor extends StatefulWidget {
+  spor() : super();
+  final String title = "File Operations";
+
   @override
-  _sporState createState() => _sporState();
+  sporState createState() => sporState();
 }
 
-class _sporState extends State<spor> {
+class sporState extends State<spor> {
+  String fileContents = "Veri Yok";
+  final myController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar:AppBar(
-        title:Text('Tiryaki Ayakkabı')),
-      body: Center(child: Column(children: <Widget>[
-
-        TextField(
-          decoration: InputDecoration(
-            border: OutlineInputBorder(),
-            labelText: 'Cinsiyetinizi Girisinz',
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.title),
+      ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+              controller: myController,
+            ),
           ),
-        ),
-        TextField(
-          decoration: InputDecoration(
-            border: OutlineInputBorder(),
-            labelText: 'Ayakkabı Numaranızı Giriniz:',
+          ElevatedButton(
+            child: Text("Dosyaya Kaydet"),
+            onPressed: () {
+              FileUtils.saveToFile(myController.text);
+            },
           ),
-
-        ),
-        Text(''),
-        ElevatedButton(
-          child: Text("Satın Almaya Gidiniz",style: TextStyle(fontSize: 20),),
-          onPressed: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => satinal()));
-          },
-        ),
-
-
-      ],
-      ),),
-
+          ElevatedButton(
+            child: Text("Dosyadan Oku"),
+            onPressed: () {
+              FileUtils.readFromFile().then((contents) {
+                setState(() {
+                  fileContents = contents;
+                });
+              });
+            },
+          ),
+          Text(fileContents),
+          Text(''),
+          Text('Deneme'),
+          Image(image: AssetImage('assets/images/logo1.jpg')),
+        ],
+      ),
     );
-
   }
 }
-

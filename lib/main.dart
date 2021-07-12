@@ -57,7 +57,13 @@ class _MyHomePageState extends State<MyHomePage> {
           Navigator.push(context, MaterialPageRoute(builder: (context) => ayakkabi()));
         },
       ),
-        Text('Şifreyi Unuttmum'),
+        Text(''),
+        ElevatedButton(
+          child: Text("Kayıt OL"),
+          onPressed: (){
+            Navigator.push(context, MaterialPageRoute(builder: (context) => ayakkabi()));
+          },
+        ),
       ],
       ),),
 
